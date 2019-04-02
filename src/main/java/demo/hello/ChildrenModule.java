@@ -20,4 +20,10 @@ public class ChildrenModule {
         System.out.println("id="+id+",name="+name);
         return "eeemsg:heloo Nutz!id="+id+",name="+name;
     }
+    @At("/test1")
+    @Ok("json")
+    public String doTest1(@Param("id") int id,@Param("name") String name){
+        System.out.println("id="+id+",name="+name);
+        return "eeemsg:heloo Nutz!id="+id+",name="+name;
+    }
 }
