@@ -26,4 +26,7 @@ public class ChildrenModule {
         System.out.println("id="+id+",name="+name);
         return "eeemsg:heloo Nutz!id="+id+",name="+name;
     }
+
+
+
 }
