@@ -48,7 +48,6 @@ public class test {
             System.out.println(a);
         }
 
-
         Object[] object1=new Object[]{1,2.3,4,5};
         for (Object object:object1) {
             System.out.println(object);

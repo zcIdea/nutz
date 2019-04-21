@@ -4,9 +4,7 @@ package demo.hello;
 import demo.hello.entity.Person;
 import org.nutz.mvc.View;
 import org.nutz.mvc.ViewModel;
-import org.nutz.mvc.annotation.At;
-import org.nutz.mvc.annotation.Ok;
-import org.nutz.mvc.annotation.Param;
+import org.nutz.mvc.annotation.*;
 import org.nutz.mvc.view.JspView;
 import org.nutz.mvc.view.UTF8JsonView;
 import org.nutz.mvc.view.ViewWrapper;
@@ -19,12 +17,15 @@ import java.util.List;
 @At("/children")
 public class ChildrenModule {
 
+    //返回到具体的页面
     @At("/hello")
+    @GET
     @Ok("jsp:jsp.hello")
     public String doHello(@Param("id") int id,@Param("name") String name){
         return "heloo Nutz!id="+id+",name="+name;
     }
 
+    //返回json格式的字符串数据
     @At("/test")
     @Ok("json")
     public String doTest(@Param("id") int id,@Param("name") String name){
@@ -104,6 +105,42 @@ public class ChildrenModule {
 //        return "任性返回任意文本";
 //        return "<h1>任性返回任意文本</h1>";
         return "alert('任性返回任意文本')";
+    }
+
+    /**
+     * 注意, Nutz支持的是Restful风格的映射, 但并非一个Restful实现.
+     * Nutz.Mvc 对于 REST 的支持，包括4个常用方法及通用定义方法：
+         GET
+         POST
+         PUT
+         DELETE
+         @At(methods="xxx,yyy,zzz")
+     * @param id
+     * @return
+     */
+    @At("/testRestful/?")
+    @GET
+    @Ok("raw:json")
+    public String testRestful(int id,@Param("name") String name,@Param("age") int age){
+        System.out.println("id:="+id+";name="+name+";age="+age);
+        return "id:="+id+";name="+name+";age="+age;
+    }
+    //Post
+    @At("/testRestfulPost/?")
+    @POST
+    @Ok("raw:json")
+    public String testRestfulPost(int id,@Param("..") Person person){
+        System.out.println("id:="+id+person);
+        return "id:="+id+",person="+person;
+    }
+    //DELETE
+    @At("/testRestfulDelete/?")
+    @DELETE
+    @Ok("raw:json")
+    public String testRestfulDelete(int id){
+        System.out.println("delete==id:="+id);
+        //json格式的数据,要带上{ }的键值对数据，因为$.ajax()方法里面，解析json类型 返回的数据用的是JSON.parse()方法进行转义的
+        return "{\"data\":\"delete==id="+id+"\"}";
     }
 
 }
